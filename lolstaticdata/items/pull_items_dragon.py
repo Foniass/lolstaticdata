@@ -10,9 +10,18 @@ def get_latest_version():
     url = "http://ddragon.leagueoflegends.com/api/versions.json"
     j = download_json(url, use_cache=False)
     return j[0]
+  
+def get_previous_version():
+    url = "http://ddragon.leagueoflegends.com/api/versions.json"
+    j = download_json(url, use_cache=False)
+    previous_version = j[1]
+    version = previous_version.split(".")
+    version = str(version[0]) + "." + str(version[1])
+    return version
 
 
 class DragonItem:
+    previous_version = get_previous_version()
     latest_version = get_latest_version()
     version = latest_version.split(".")
     version = str(version[0]) + "." + str(version[1])
@@ -28,11 +37,16 @@ class DragonItem:
 
     @staticmethod
     def get_item_plaintext(item):
-        url = f"https://raw.communitydragon.org/{DragonItem.version}/game/en_us/data/menu/en_us/main.stringtable.json"
-        j = download_json(url, use_cache=True)
         try:
-            return j['entries']["game_item_plaintext_" + str(item)]
+          url = f"https://raw.communitydragon.org/{DragonItem.version}/game/en_us/data/menu/en_us/main.stringtable.json"
+          j = download_json(url, use_cache=True)
+          return j['entries']["game_item_plaintext_" + str(item)]
         except:
+          try:
+            url = f"https://raw.communitydragon.org/{DragonItem.previous_version}/game/en_us/data/menu/en_us/main.stringtable.json"
+            j = download_json(url, use_cache=True)
+            return j['entries']["game_item_plaintext_" + str(item)]
+          except:
             return None
 
     @classmethod
