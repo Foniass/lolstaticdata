@@ -22,8 +22,9 @@ Note that it is impossible to represent the enormous complexity of League of Leg
 git clone https://github.com/meraki-analytics/lolstaticdata.git
 cd lolstaticdata
 pip install -r requirements.txt
-python -m lolstaticdata.champions # to run the champion-pulling code
-python -m lolstaticdata.items     # to run the item-pulling code
+python3 -m lolstaticdata.champions # to run the champion-pulling code
+python3 -m lolstaticdata.items     # to run the item-pulling code
+python3 -m lolstaticdata.championrates     # to run the rates-pulling code
 ```
 
 ## Contributing
