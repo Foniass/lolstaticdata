@@ -1,8 +1,11 @@
 import json
 import re
 import requests
+import os
 
 def main():
+    directory = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../.."))
+    
     all_meraki_roles = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
     all_json_roles = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "SUPPORT"]
     all_champs = {}
@@ -22,8 +25,9 @@ def main():
     version_split = requests.get("https://raw.communitydragon.org/latest/content-metadata.json").json()["version"].split(".")
     version = version_split[0] + "." + version_split[1]
 
-    with open("/home/meraki/code/meraki/Data/champion-rates/rates.json", "w") as f:
-        json.dump({"data":all_champs,"patch":version}, f)
+    jsonfn = os.path.join(directory, "championrates.json")
+    with open(jsonfn, "w", encoding="utf8") as f:
+        json.dump({"data":all_champs,"patch":version}, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     main()

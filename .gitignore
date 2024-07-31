@@ -2,6 +2,7 @@
 /champions/
 __pycache__/
 __cache__/
+championrates.json
 champions.json
 items.json
 .vscode/
