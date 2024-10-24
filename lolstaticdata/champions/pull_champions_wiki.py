@@ -135,6 +135,10 @@ class LolWikiDataHandler:
         url = "https://wiki.leagueoflegends.com/en-us/Module:ChampionData/data"
         html = download_soup(url, self.use_cache)
         soup = BeautifulSoup(html, "lxml")
+        
+        # After fetching the page content
+        with open('page_content.html', 'w', encoding='utf-8') as f:
+          f.write(soup.prettify())
 
         # Pull the relevant champData from the html tags
         spans = soup.find("pre", {"class": "mw-code mw-script"})
